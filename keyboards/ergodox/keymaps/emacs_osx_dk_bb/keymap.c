@@ -1,10 +1,83 @@
 #include "ergodox.h"
 #include "debug.h"
 #include "action_layer.h"
+#include "version.h"
 
 #define BASE 0 // default layer
 #define SYMB 1 // symbols
 #define MDIA 2 // media keys
+
+enum macros {
+  RUN
+};
+
+enum function_ids {
+  EMOJI,
+  EMOJI2,
+  EPRM,
+  VRSN,
+  RGB_SLD,
+  GO_GROUP
+};
+
+/* opt can only be 0-15 */
+enum emojis {
+  SHRUG,
+  YAY,
+  HUG,
+  SMILE,
+  SMILE2,
+  HMM1,
+  HMM2,
+  BEAR1,
+  BEAR2,
+  FUU,
+  EGGY1,
+  EGGY2,
+  FACE1,
+  FACE2,
+  UHU,
+  SMRK1
+};
+
+enum emojis2 {
+  SMRK2,
+  LOVE
+};
+
+enum progmem_ids {
+  EMOJI_SHRUG,
+  EMOJI_YAY,
+  EMOJI_HUG,
+  EMOJI_SMILE,
+  EMOJI_SMILE2,
+  EMOJI_HMM1,
+  EMOJI_HMM2,
+  EMOJI_BEAR1,
+  EMOJI_BEAR2,
+  EMOJI_FUU,
+  EMOJI_EGGY1,
+  EMOJI_EGGY2,
+  EMOJI_FACE1,
+  EMOJI_FACE2,
+  EMOJI_UHU,
+  EMOJI_SMRK1,
+  EMOJI_SMRK2,
+  EMOJI_LOVE,
+  F_EPRM,
+  F_VRSN,
+  F_RGB_SLD,
+  I3_GO_GROUP_10,
+  I3_GO_GROUP_1,
+  I3_GO_GROUP_2,
+  I3_GO_GROUP_3,
+  I3_GO_GROUP_4,
+  I3_GO_GROUP_5,
+  I3_GO_GROUP_6,
+  I3_GO_GROUP_7,
+  I3_GO_GROUP_8,
+  I3_GO_GROUP_9,
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
@@ -92,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_KP_ENTER
 ),
-/* Keymap 2: Media and mouse keys
+/* Keymap 2: Media and mouse and RGB (shine) keys
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  | F10  |  F11   |
@@ -106,11 +179,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   |      |      |      |      |      |                                       |      |VolUp |VolDn | Mute |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |      |      |       |      |      |
+ *                                        |Toggle|Animat|       |      |      |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |Brwser|
- *                                 |      |      |------|       |------|      |Back  |
- *                                 |      |      |      |       |      |      |      |
+ *                                 |Bright|Bright|Solid |       |      |      |      |
+ *                                 |ness- |ness+ |------|       |------| Hue- | Hue+ |
+ *                                 |      |      |      |       | EPRM |      |      |
  *                                 `--------------------'       `--------------------'
  */
 // MEDIA AND MOUSE
@@ -120,9 +193,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                                           KC_TRNS, KC_TRNS,
-                                                    KC_TRNS,
-                                  KC_TRNS, KC_TRNS, KC_TRNS,
+                                       RGB_TOG,RGB_MOD,
+                                       F(F_RGB_SLD),
+                               RGB_VAD,RGB_VAI,KC_TRNS,
     // right hand
        KC_TRNS, KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F11,
        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_F12,
@@ -131,37 +204,231 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           KC_TRNS, KC_VOLU, KC_VOLD, KC_MUTE, KC_TRNS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_WBAK
+       F(F_EPRM), RGB_HUD, RGB_HUI
 ),
 };
 
 const uint16_t PROGMEM fn_actions[] = {
-    [1] = ACTION_LAYER_TAP_TOGGLE(SYMB)                // FN1 - Momentary Layer 1 (Symbols)
+  [EMOJI_SHRUG]   = ACTION_FUNCTION_OPT(EMOJI, SHRUG),
+  [EMOJI_YAY]     = ACTION_FUNCTION_OPT(EMOJI, YAY),
+  [EMOJI_HUG]     = ACTION_FUNCTION_OPT(EMOJI,HUG),
+  [EMOJI_SMILE]   = ACTION_FUNCTION_OPT(EMOJI,SMILE),
+  [EMOJI_SMILE2]  = ACTION_FUNCTION_OPT(EMOJI,SMILE2),
+  [EMOJI_HMM1]    = ACTION_FUNCTION_OPT(EMOJI,HMM1),
+  [EMOJI_HMM2]    = ACTION_FUNCTION_OPT(EMOJI,HMM2),
+  [EMOJI_BEAR1]   = ACTION_FUNCTION_OPT(EMOJI,BEAR1),
+  [EMOJI_BEAR2]   = ACTION_FUNCTION_OPT(EMOJI,BEAR2),
+  [EMOJI_FUU]     = ACTION_FUNCTION_OPT(EMOJI,FUU),
+  [EMOJI_EGGY1]   = ACTION_FUNCTION_OPT(EMOJI,EGGY1),
+  [EMOJI_EGGY2]   = ACTION_FUNCTION_OPT(EMOJI,EGGY2),
+  [EMOJI_FACE1]   = ACTION_FUNCTION_OPT(EMOJI,FACE1),
+  [EMOJI_FACE2]   = ACTION_FUNCTION_OPT(EMOJI,FACE2),
+  [EMOJI_UHU]     = ACTION_FUNCTION_OPT(EMOJI,UHU),
+  [EMOJI_SMRK1]   = ACTION_FUNCTION_OPT(EMOJI,SMRK1),
+  [EMOJI_SMRK2]   = ACTION_FUNCTION_OPT(EMOJI2,SMRK2),
+  [EMOJI_LOVE]    = ACTION_FUNCTION_OPT(EMOJI2,LOVE),
+  [F_EPRM]        = ACTION_FUNCTION(EPRM),
+  [F_VRSN]        = ACTION_FUNCTION(VRSN),
+  [F_RGB_SLD]     = ACTION_FUNCTION(RGB_SLD),
+  [I3_GO_GROUP_10]= ACTION_FUNCTION_OPT(GO_GROUP,0),
+  [I3_GO_GROUP_1] = ACTION_FUNCTION_OPT(GO_GROUP,1),
+  [I3_GO_GROUP_2] = ACTION_FUNCTION_OPT(GO_GROUP,2),
+  [I3_GO_GROUP_3] = ACTION_FUNCTION_OPT(GO_GROUP,3),
+  [I3_GO_GROUP_4] = ACTION_FUNCTION_OPT(GO_GROUP,4),
+  [I3_GO_GROUP_5] = ACTION_FUNCTION_OPT(GO_GROUP,5),
+  [I3_GO_GROUP_6] = ACTION_FUNCTION_OPT(GO_GROUP,6),
+  [I3_GO_GROUP_7] = ACTION_FUNCTION_OPT(GO_GROUP,7),
+  [I3_GO_GROUP_8] = ACTION_FUNCTION_OPT(GO_GROUP,8),
+  [I3_GO_GROUP_9] = ACTION_FUNCTION_OPT(GO_GROUP,9),
 };
 
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-  // MACRODOWN only works in this function
-      switch(id) {
-        case 0:
-        if (record->event.pressed) {
-          register_code(KC_RSFT);
-        } else {
-          unregister_code(KC_RSFT);
-        }
-        break;
+#define TAP_ONCE(code)  \
+  register_code (code); \
+  unregister_code (code)
+
+void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
+  if (record->event.pressed) {
+    switch(id) {
+    case EPRM:
+      eeconfig_init();
+      break;
+    case VRSN:
+      SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+      break;
+    case RGB_SLD:
+#ifdef RGBLIGHT_ENABLE
+      rgblight_mode(1);
+#endif
+      break;
+    case GO_GROUP:
+      register_code(KC_LCTL); TAP_ONCE(KC_I); unregister_code(KC_LCTL);
+      TAP_ONCE(KC_G);
+      if (opt == 0) {
+	TAP_ONCE(39);
+      } else {
+	TAP_ONCE(29+opt);
       }
-    return MACRO_NONE;
+      break;
+    case EMOJI:
+      switch(opt) {
+      case SHRUG:
+	unicode_input_start(); register_hex(0xaf); unicode_input_finish();
+	TAP_ONCE (KC_BSLS);
+	register_code (KC_RSFT); TAP_ONCE (KC_MINS); TAP_ONCE (KC_9); unregister_code (KC_RSFT);
+	unicode_input_start (); register_hex(0x30c4); unicode_input_finish();
+	register_code (KC_RSFT); TAP_ONCE (KC_0); TAP_ONCE (KC_MINS); unregister_code (KC_RSFT);
+	TAP_ONCE (KC_SLSH);
+	unicode_input_start (); register_hex(0xaf); unicode_input_finish();
+	break;
+      case YAY:
+	SEND_STRING ("\\o/");
+	break;
+      case HUG:
+	unicode_input_start(); register_hex(0x0f3c); unicode_input_finish();
+	TAP_ONCE (KC_SPC);
+	unicode_input_start(); register_hex(0x3064); unicode_input_finish();
+	TAP_ONCE (KC_SPC);
+	unicode_input_start(); register_hex(0x25d5); unicode_input_finish();
+	unicode_input_start(); register_hex(0x005f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x25d5); unicode_input_finish();
+	TAP_ONCE (KC_SPC);
+	unicode_input_start(); register_hex(0x0f3d); unicode_input_finish();
+	unicode_input_start(); register_hex(0x3064); unicode_input_finish();
+	break;
+      case SMILE:
+	unicode_input_start(); register_hex(0x0298); unicode_input_finish();
+	unicode_input_start(); register_hex(0x203f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0298); unicode_input_finish();
+	break;
+      case SMILE2:
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0298); unicode_input_finish();
+	unicode_input_start(); register_hex(0x203f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0298); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+	break;
+      case HMM1:
+	unicode_input_start(); register_hex(0x0ca0); unicode_input_finish();
+	unicode_input_start(); register_hex(0x005f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0ca0); unicode_input_finish();
+	break;
+      case HMM2:
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0ca0); unicode_input_finish();
+	unicode_input_start(); register_hex(0x005f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0ca0); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+	break;
+      case BEAR1:
+	unicode_input_start(); register_hex(0x0295); unicode_input_finish();
+	unicode_input_start(); register_hex(0x2022); unicode_input_finish();
+	unicode_input_start(); register_hex(0x1d25); unicode_input_finish();
+	unicode_input_start(); register_hex(0x2022); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0294); unicode_input_finish();
+	break;
+      case BEAR2:
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x1d54); unicode_input_finish();
+	unicode_input_start(); register_hex(0x1d25); unicode_input_finish();
+	unicode_input_start(); register_hex(0x1d54); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+	break;
+      case FUU:
+	unicode_input_start(); register_hex(0x256d); unicode_input_finish();
+	unicode_input_start(); register_hex(0x2229); unicode_input_finish();
+	unicode_input_start(); register_hex(0x256e); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x002d); unicode_input_finish();
+	unicode_input_start(); register_hex(0x005f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x002d); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+	unicode_input_start(); register_hex(0x256d); unicode_input_finish();
+	unicode_input_start(); register_hex(0x2229); unicode_input_finish();
+	unicode_input_start(); register_hex(0x256e); unicode_input_finish();
+	break;
+      case EGGY1:
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x256f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x00b0); unicode_input_finish();
+	unicode_input_start(); register_hex(0x25a1); unicode_input_finish();
+	unicode_input_start(); register_hex(0x00b0); unicode_input_finish();
+	unicode_input_start(); register_hex(0xff09); unicode_input_finish();
+	unicode_input_start(); register_hex(0x256f); unicode_input_finish();
+	break;
+      case EGGY2:
+	unicode_input_start(); register_hex(0x30ce); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+	unicode_input_start(); register_hex(0x309c); unicode_input_finish();
+	unicode_input_start(); register_hex(0x002d); unicode_input_finish();
+	unicode_input_start(); register_hex(0x309c); unicode_input_finish();
+	unicode_input_start(); register_hex(0x30ce); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+	break;
+      case FACE1:
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x002d); unicode_input_finish();
+	unicode_input_start(); register_hex(0x005f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x002d); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+	break;
+      case FACE2:
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x2022); unicode_input_finish();
+	unicode_input_start(); register_hex(0x005f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x2022); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+	break;
+      case UHU:
+	unicode_input_start(); register_hex(0x2299); unicode_input_finish();
+	unicode_input_start(); register_hex(0xfe4f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x2299); unicode_input_finish();
+	break;
+      case SMRK1:
+	unicode_input_start(); register_hex(0x005e); unicode_input_finish();
+	unicode_input_start(); register_hex(0x032e); unicode_input_finish();
+	unicode_input_start(); register_hex(0x005e); unicode_input_finish();
+	break;
+      }
+      break;
+    case EMOJI2:
+      switch(opt) {
+	case SMRK2:
+	  unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	  unicode_input_start(); register_hex(0x005e); unicode_input_finish();
+	  unicode_input_start(); register_hex(0x032e); unicode_input_finish();
+	  unicode_input_start(); register_hex(0x005e); unicode_input_finish();
+	  unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+	  break;
+      case LOVE:
+	unicode_input_start(); register_hex(0x2665); unicode_input_finish();
+	unicode_input_start(); register_hex(0x203f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x2665); unicode_input_finish();
+	break;
+      }
+      break;
+    }
+  }
+}
+
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
+  if (record->event.pressed) {
+    switch(id) {
+      case RUN:
+	return MACRO( D(LCTL), T(I), U(LCTL), T(R), END  );
+      break;
+    }
+  }
+  return MACRO_NONE;
 };
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
-
+  set_unicode_input_mode(UC_LNX);
 };
 
 // Runs constantly in the background, in a loop.
 void matrix_scan_user(void) {
-
     uint8_t layer = biton32(layer_state);
 
     ergodox_board_led_off();
@@ -169,16 +436,22 @@ void matrix_scan_user(void) {
     ergodox_right_led_2_off();
     ergodox_right_led_3_off();
     switch (layer) {
-      // TODO: Make this relevant to the ErgoDox EZ.
-        case 1:
-            ergodox_right_led_1_on();
-            break;
-        case 2:
-            ergodox_right_led_2_on();
-            break;
-        default:
-            // none
-            break;
+    case 1:
+      ergodox_right_led_1_on();
+      break;
+    case 2:
+      ergodox_right_led_2_on();
+      break;
+    case 3:
+      ergodox_right_led_3_on();
+      break;
+    case 4:
+      ergodox_right_led_1_on();
+      ergodox_right_led_3_on();
+      break;
+    default:
+      // none
+      break;
     }
 
 };
