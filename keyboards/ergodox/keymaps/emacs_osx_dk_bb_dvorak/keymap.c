@@ -89,8 +89,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |   Tab  |   '  |   ,  |   .  |   P  |   Y  |  [   |           |   ]  |   F  |   G  |   C  |   R  |   L  |   /    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | LCtrl  |   A  |   O  |   E  |   U  |   I  |------|           |------|   D  |   H  |   T  |   N  |   S  |-/RCtrl |
- * |--------+------+------+------+------+------| ~L3  |           |   \  |------+------+------+------+------+--------|
+ * | LCtrl  |   A  |   O  |   E  |   U  |   I  |------|           |------|   D  |   H  |   T  |   N  |   S  |   -    |
+ * |--------+------+------+------+------+------|  ~   |           |   \  |------+------+------+------+------+--------|
  * | LShift |   :  |   Q  |   J  |   K  |   X  |      |           |      |   B  |   M  |   W  |   V  |   Z  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   | ~L1  | LAlt |  Left| Right| LCmd |                                       | LCmd | Up   | Down | RCtrl|  ~L2 |
@@ -110,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LT(UNI, KC_GRV),         KC_1,        KC_2,    KC_3,   KC_4,   KC_5,   KC_6,
         KC_TAB,         KC_QUOT,     KC_COMM, KC_DOT, KC_P,   KC_Y,   KC_LBRC,
         KC_LCTRL,       KC_A,        KC_O,    KC_E,   KC_U,   KC_I,
-        KC_LSPO,        KC_SCLN,     KC_Q,    KC_J,   KC_K,   KC_X,   MO(UNI),
+        KC_LSPO,        KC_SCLN,     KC_Q,    KC_J,   KC_K,   KC_X,   KC_TILD,
         MO(SYMB),       KC_LALT,   KC_LEFT,KC_RGHT,KC_LGUI,
                                                       KC_DELT,KC_ESC,
                                                               KC_UNDS,
@@ -118,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // right hand
              KC_5,         KC_6,   KC_7,   KC_8,   KC_9,   KC_0,            LT(UNI2, KC_EQL),
              KC_RBRC,      KC_F,   KC_G,   KC_C,   KC_R,   KC_L,            KC_SLSH,
-                           KC_D,   KC_H,   KC_T,   KC_N,   KC_S,      CTL_T(KC_MINS),
+                           KC_D,   KC_H,   KC_T,   KC_N,   KC_S,            KC_MINS,
              KC_BSLS,      KC_B,   KC_M,   KC_W,   KC_V,   KC_Z,            KC_RSPC,
                                   KC_LGUI,KC_UP,  KC_DOWN,KC_RCTRL,         MO(MDIA),
              KC_APP,      KC_ESC,
@@ -224,7 +224,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |   ▒  |  ▓   |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |      | 
+ *                                 |      |      |      |       |      |      |      |
  *                                 |      |      |------|       |------|      |      |
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
@@ -250,7 +250,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, KC_TRNS, KC_TRNS
 ),
 
-/* Keymap 4: Unicode 2 
+/* Keymap 4: Unicode 2
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  ¹   |  ²   |  ³   |  ⁴   |  ⁵   |  ⁶   |           |  ⁶   |  ⁷   |  ⁸   |  ⁹   |  ⁰   |  ℃   |   ™    |
@@ -266,12 +266,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |      | 
+ *                                 |      |      |      |       |      |      |      |
  *                                 |      |      |------|       |------|      |      |
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-// Unicode 2   
+// Unicode 2
 [UNI2] = KEYMAP(
 		KC_TRNS, UC(0x00b9), UC(0x00b2), UC(0x00b3), UC(0x2074), UC(0x2075), UC(0x2076),
 		KC_TRNS, UC(0x2081), UC(0x2082), UC(0x2083), UC(0x2084), UC(0x2085), UC(0x2086),
@@ -367,7 +367,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 	unicode_input_start (); register_hex(0xaf); unicode_input_finish();
 	break;
       case YAY:
-	SEND_STRING ("\\o/");	
+	SEND_STRING ("\\o/");
 	break;
       case HUG:
 	unicode_input_start(); register_hex(0x0f3c); unicode_input_finish();
@@ -492,7 +492,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 	unicode_input_start(); register_hex(0x2665); unicode_input_finish();
 	break;
       }
-      break;   
+      break;
     }
   }
 }
