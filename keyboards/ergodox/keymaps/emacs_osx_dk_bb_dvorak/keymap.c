@@ -19,6 +19,7 @@ enum function_ids {
   EPRM,
   VRSN,
   RGB_SLD,
+  RGB_STEP_REV,
   GO_GROUP
 };
 
@@ -69,6 +70,7 @@ enum progmem_ids {
   F_EPRM,
   F_VRSN,
   F_RGB_SLD,
+  F_RGB_STEP_REV,
   I3_GO_GROUP_10,
   I3_GO_GROUP_1,
   I3_GO_GROUP_2,
@@ -180,7 +182,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   |      |      |      | Lclk | Rclk |                                       |      |VolUp |VolDn | Mute |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |Toggle|Animat|       |      |      |
+ *                                        |Toggle|Animat|       | Ani- | Ani+ |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |Bright|Bright|Solid |       |      |      |      |
  *                                 |ness- |ness+ |------|       |------| Hue- | Hue+ |
@@ -203,7 +205,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, KC_MPLY,
        KC_TRNS,  KC_ACL0, KC_MPRV, KC_MRWD, KC_MFFD, KC_MNXT, KC_MSTP,
                           KC_TRNS, KC_VOLU, KC_VOLD, KC_MUTE, KC_TRNS,
-       KC_TRNS, KC_TRNS,
+       F(F_RGB_STEP_REV), RGB_MOD,
        KC_TRNS,
        F(F_EPRM), RGB_HUD, RGB_HUI
 ),
@@ -315,6 +317,7 @@ const uint16_t PROGMEM fn_actions[] = {
   [F_EPRM]        = ACTION_FUNCTION(EPRM),
   [F_VRSN]        = ACTION_FUNCTION(VRSN),
   [F_RGB_SLD]     = ACTION_FUNCTION(RGB_SLD),
+  [F_RGB_STEP_REV]     = ACTION_FUNCTION(RGB_STEP_REV),
   [I3_GO_GROUP_10]= ACTION_FUNCTION_OPT(GO_GROUP,0),
   [I3_GO_GROUP_1] = ACTION_FUNCTION_OPT(GO_GROUP,1),
   [I3_GO_GROUP_2] = ACTION_FUNCTION_OPT(GO_GROUP,2),
@@ -343,6 +346,11 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
     case RGB_SLD:
 #ifdef RGBLIGHT_ENABLE
       rgblight_mode(1);
+#endif
+      break;
+    case RGB_STEP_REV:
+#ifdef RGBLIGHT_ENABLE
+        rgblight_step_reverse();
 #endif
       break;
     case GO_GROUP:
