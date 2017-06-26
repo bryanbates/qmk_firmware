@@ -45,7 +45,10 @@ enum emojis {
 
 enum emojis2 {
   SMRK2,
-  LOVE
+  LOVE,
+  HAPPY1,
+  HAPPY2,
+  TABLE1,
 };
 
 enum progmem_ids {
@@ -67,6 +70,9 @@ enum progmem_ids {
   EMOJI_SMRK1,
   EMOJI_SMRK2,
   EMOJI_LOVE,
+  EMOJI_HAPPY1,
+  EMOJI_HAPPY2,
+  EMOJI_TABLE1,
   F_EPRM,
   F_VRSN,
   F_RGB_SLD,
@@ -234,7 +240,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [UNI] = KEYMAP(
 		KC_TRNS, UC(0x250c), UC(0x2510), UC(0x2514), UC(0x2518), UC(0x2502), UC(0x2500),
 		KC_TRNS, F(EMOJI_SHRUG), F(EMOJI_YAY), F(EMOJI_HUG), F(EMOJI_SMILE), F(EMOJI_SMILE2), KC_TRNS,
-		KC_TRNS, F(EMOJI_HMM1), F(EMOJI_HMM2), F(EMOJI_BEAR1), F(EMOJI_BEAR2), F(EMOJI_FUU),
+		KC_TRNS, F(EMOJI_HMM1), F(EMOJI_HMM2), F(EMOJI_HAPPY1), F(EMOJI_HAPPY2), F(EMOJI_TABLE1),
 		KC_TRNS, F(EMOJI_EGGY1), F(EMOJI_EGGY2), F(EMOJI_FACE1), F(EMOJI_FACE2), F(EMOJI_UHU), KC_TRNS,
 		KC_TRNS, F(EMOJI_SMRK1), F(EMOJI_SMRK2), F(EMOJI_LOVE), F(F_VRSN),
 		KC_TRNS, KC_TRNS,
@@ -314,6 +320,9 @@ const uint16_t PROGMEM fn_actions[] = {
   [EMOJI_SMRK1]   = ACTION_FUNCTION_OPT(EMOJI,SMRK1),
   [EMOJI_SMRK2]   = ACTION_FUNCTION_OPT(EMOJI2,SMRK2),
   [EMOJI_LOVE]    = ACTION_FUNCTION_OPT(EMOJI2,LOVE),
+  [EMOJI_HAPPY1]  = ACTION_FUNCTION_OPT(EMOJI2,HAPPY1),
+  [EMOJI_HAPPY2]  = ACTION_FUNCTION_OPT(EMOJI2,HAPPY2),
+  [EMOJI_TABLE1]  = ACTION_FUNCTION_OPT(EMOJI2,TABLE1),
   [F_EPRM]        = ACTION_FUNCTION(EPRM),
   [F_VRSN]        = ACTION_FUNCTION(VRSN),
   [F_RGB_SLD]     = ACTION_FUNCTION(RGB_SLD),
@@ -498,6 +507,39 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 	unicode_input_start(); register_hex(0x203f); unicode_input_finish();
 	unicode_input_start(); register_hex(0x2665); unicode_input_finish();
 	break;
+      case HAPPY1:
+	unicode_input_start(); register_hex(0x1555); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+	unicode_input_start(); register_hex(0x141b); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+	unicode_input_start(); register_hex(0x1557); unicode_input_finish();
+	break;
+      case HAPPY2:
+	unicode_input_start(); register_hex(0x1555); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+	unicode_input_start(); register_hex(0x1415); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+	unicode_input_start(); register_hex(0x1557); unicode_input_finish();
+	break;
+      case TABLE1:
+	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+	unicode_input_start(); register_hex(0x256f); unicode_input_finish();
+	unicode_input_start(); register_hex(0x00b0); unicode_input_finish();
+	unicode_input_start(); register_hex(0x25a1); unicode_input_finish();
+	unicode_input_start(); register_hex(0x00b0); unicode_input_finish();
+	unicode_input_start(); register_hex(0xff09); unicode_input_finish();
+	unicode_input_start(); register_hex(0x256f); unicode_input_finish();
+	unicode_input_start(); register_hex(0xfe35); unicode_input_finish();
+	unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+	unicode_input_start(); register_hex(0x253b); unicode_input_finish();
+	unicode_input_start(); register_hex(0x2501); unicode_input_finish();
+	unicode_input_start(); register_hex(0x253b); unicode_input_finish();
+	break;
+
       }
       break;
     }
