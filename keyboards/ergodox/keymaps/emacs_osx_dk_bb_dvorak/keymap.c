@@ -20,7 +20,8 @@ enum function_ids {
   VRSN,
   RGB_SLD,
   RGB_STEP_REV,
-  GO_GROUP
+  UNICODE_OSX,
+  UNICODE_LINUX,
 };
 
 /* opt can only be 0-15 */
@@ -48,7 +49,13 @@ enum emojis2 {
   LOVE,
   HAPPY1,
   HAPPY2,
+  HAPPY3,
+  SING1,
+  SING2,
   TABLE1,
+  TABLE2,
+  TABLE3,
+  CONFUSED1,
 };
 
 enum progmem_ids {
@@ -72,21 +79,19 @@ enum progmem_ids {
   EMOJI_LOVE,
   EMOJI_HAPPY1,
   EMOJI_HAPPY2,
+  EMOJI_HAPPY3,
+  EMOJI_SING1,
+  EMOJI_SING2,
   EMOJI_TABLE1,
+  EMOJI_TABLE2,
+  EMOJI_TABLE3,
+  EMOJI_CONFUSED1,
   F_EPRM,
   F_VRSN,
   F_RGB_SLD,
   F_RGB_STEP_REV,
-  I3_GO_GROUP_10,
-  I3_GO_GROUP_1,
-  I3_GO_GROUP_2,
-  I3_GO_GROUP_3,
-  I3_GO_GROUP_4,
-  I3_GO_GROUP_5,
-  I3_GO_GROUP_6,
-  I3_GO_GROUP_7,
-  I3_GO_GROUP_8,
-  I3_GO_GROUP_9,
+  F_UNICODE_OSX,
+  F_UNICODE_LINUX,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -220,13 +225,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  ┌   |  ┐   |  └   |  ┘   |  │   |  ─   |           |  ╔   |  ╗   |  ╚   |  ╝   |  ║   |  ═   |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        | shrug| yay  | hug  | smile|smile2|      |           |  Λ   |  ■   |  μ   |  →   |  ➙   |  ▻   |  █     |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        | hmm1 | hmm2 | bear1| bear2| fuu  |------|           |------|  ☺   |  ☻   |  ☹   |  ♡   |  ♥   |  ░     |
- * |--------+------+------+------+------+------|      |           |  λ   |------+------+------+------+------+--------|
- * |        | eggy1| eggy2| face1| face2| uhu  |      |           |      |  ❤   |  ☐   |  ☑   |  ☒   |  ✓   |  ▄     |
+ * |        | shrug| yay  | hug  | smile|smile2| OSX  |           |  Λ   |  ℉   |  μ   |  ℃   |  ➙   |  ▻   |  ‽    |
+ * |--------+------+------+------+------+------|Mode  |           |      |------+------+------+------+------+--------|
+ * |        | hmm1 | hmm2 | gary1| gary2| gary3|------|           |------|  ☺   |  ☻   |  ☹   |  ♡   |  ♥   |  █    |
+ * |--------+------+------+------+------+------|LINUX |           |  λ   |------+------+------+------+------+--------|
+ * |        |table1|table2| sing1| sing2| cfzd1|Mode  |           |      |  ❤  |  ☐   |  ☑   |  ☒   |  ♫   |  ▄    |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      | smrk1| smrk2| love | VER  |                                       |  ✔   |  ✗   |  ✘   |  ●   |  ▀   |
+ *   |      |table3| smrk2| love | VER  |                                       |  ⌘   |  ✔   |  ✘   |  ●   |  ▀   |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |   ▒  |  ▓   |
@@ -239,19 +244,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Unicode
 [UNI] = KEYMAP(
 		KC_TRNS, UC(0x250c), UC(0x2510), UC(0x2514), UC(0x2518), UC(0x2502), UC(0x2500),
-		KC_TRNS, F(EMOJI_SHRUG), F(EMOJI_YAY), F(EMOJI_HUG), F(EMOJI_SMILE), F(EMOJI_SMILE2), KC_TRNS,
-		KC_TRNS, F(EMOJI_HMM1), F(EMOJI_HMM2), F(EMOJI_HAPPY1), F(EMOJI_HAPPY2), F(EMOJI_TABLE1),
-		KC_TRNS, F(EMOJI_EGGY1), F(EMOJI_EGGY2), F(EMOJI_FACE1), F(EMOJI_FACE2), F(EMOJI_UHU), KC_TRNS,
-		KC_TRNS, F(EMOJI_SMRK1), F(EMOJI_SMRK2), F(EMOJI_LOVE), F(F_VRSN),
+		KC_TRNS, F(EMOJI_SHRUG), F(EMOJI_YAY), F(EMOJI_HUG), F(EMOJI_SMILE), F(EMOJI_SMILE2), F(F_UNICODE_OSX),
+		KC_TRNS, F(EMOJI_HMM1), F(EMOJI_HMM2), F(EMOJI_HAPPY1), F(EMOJI_HAPPY2), F(EMOJI_HAPPY3),
+		KC_TRNS, F(EMOJI_TABLE1), F(EMOJI_TABLE2), F(EMOJI_SING1), F(EMOJI_SING2), F(EMOJI_CONFUSED1), F(F_UNICODE_LINUX),
+		KC_TRNS, F(EMOJI_TABLE3), F(EMOJI_SMRK2), F(EMOJI_LOVE), F(F_VRSN),
 		KC_TRNS, KC_TRNS,
                                                     KC_TRNS,
                                   KC_TRNS, KC_TRNS, KC_TRNS,
     // right hand
        UC(0x2554),  UC(0x2557), UC(0x255a), UC(0x255d), UC(0x2551), UC(0x2550), KC_TRNS,
-       UC(0x039b),  UC(0x25a0), UC(0x03bc), UC(0x2192), UC(0x2799), UC(0x25bb), UC(0x2588),
-                 UC(0x263a), UC(0x263b), UC(0x2639), UC(0x2661), UC(0x2665), UC(0x2591),
-       UC(0x03bb),  UC(0x2764), UC(0x2610), UC(0x2611), UC(0x2612), UC(0x2713), UC(0x2584),
-       UC(0x2714), UC(0x2717), UC(0x2718), UC(0x25cf), UC(0x2580),
+       UC(0x039b),  UC(0x2109), UC(0x03bc), UC(0x2103), UC(0x2799), UC(0x25bb), UC(0x203d),
+                 UC(0x263a), UC(0x263b), UC(0x2639), UC(0x2661), UC(0x2665), UC(0x2588),
+       UC(0x03bb),  UC(0x2764), UC(0x2610), UC(0x2611), UC(0x2612), UC(0x266b), UC(0x2584),
+       UC(0x2318), UC(0x2714), UC(0x2718), UC(0x25cf), UC(0x2580),
 		UC(0x2592), UC(0x2593),
 		KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS
@@ -322,21 +327,19 @@ const uint16_t PROGMEM fn_actions[] = {
   [EMOJI_LOVE]    = ACTION_FUNCTION_OPT(EMOJI2,LOVE),
   [EMOJI_HAPPY1]  = ACTION_FUNCTION_OPT(EMOJI2,HAPPY1),
   [EMOJI_HAPPY2]  = ACTION_FUNCTION_OPT(EMOJI2,HAPPY2),
+  [EMOJI_HAPPY3]  = ACTION_FUNCTION_OPT(EMOJI2,HAPPY3),
+  [EMOJI_SING1]   = ACTION_FUNCTION_OPT(EMOJI2,SING1),
+  [EMOJI_SING2]   = ACTION_FUNCTION_OPT(EMOJI2,SING2),
   [EMOJI_TABLE1]  = ACTION_FUNCTION_OPT(EMOJI2,TABLE1),
+  [EMOJI_TABLE2]  = ACTION_FUNCTION_OPT(EMOJI2,TABLE2),
+  [EMOJI_TABLE3]  = ACTION_FUNCTION_OPT(EMOJI2,TABLE3),
+  [EMOJI_CONFUSED1]  = ACTION_FUNCTION_OPT(EMOJI2,CONFUSED1),
   [F_EPRM]        = ACTION_FUNCTION(EPRM),
   [F_VRSN]        = ACTION_FUNCTION(VRSN),
   [F_RGB_SLD]     = ACTION_FUNCTION(RGB_SLD),
   [F_RGB_STEP_REV]     = ACTION_FUNCTION(RGB_STEP_REV),
-  [I3_GO_GROUP_10]= ACTION_FUNCTION_OPT(GO_GROUP,0),
-  [I3_GO_GROUP_1] = ACTION_FUNCTION_OPT(GO_GROUP,1),
-  [I3_GO_GROUP_2] = ACTION_FUNCTION_OPT(GO_GROUP,2),
-  [I3_GO_GROUP_3] = ACTION_FUNCTION_OPT(GO_GROUP,3),
-  [I3_GO_GROUP_4] = ACTION_FUNCTION_OPT(GO_GROUP,4),
-  [I3_GO_GROUP_5] = ACTION_FUNCTION_OPT(GO_GROUP,5),
-  [I3_GO_GROUP_6] = ACTION_FUNCTION_OPT(GO_GROUP,6),
-  [I3_GO_GROUP_7] = ACTION_FUNCTION_OPT(GO_GROUP,7),
-  [I3_GO_GROUP_8] = ACTION_FUNCTION_OPT(GO_GROUP,8),
-  [I3_GO_GROUP_9] = ACTION_FUNCTION_OPT(GO_GROUP,9),
+  [F_UNICODE_OSX] = ACTION_FUNCTION(UNICODE_OSX),
+  [F_UNICODE_LINUX] = ACTION_FUNCTION(UNICODE_LINUX),
 };
 
 #define TAP_ONCE(code)  \
@@ -362,15 +365,12 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
         rgblight_step_reverse();
 #endif
       break;
-    case GO_GROUP:
-      register_code(KC_LCTL); TAP_ONCE(KC_I); unregister_code(KC_LCTL);
-      TAP_ONCE(KC_G);
-      if (opt == 0) {
-	TAP_ONCE(39);
-      } else {
-	TAP_ONCE(29+opt);
-      }
-      break;
+    case UNICODE_OSX:
+        set_unicode_input_mode(UC_OSX);
+        break;
+    case UNICODE_LINUX:
+        set_unicode_input_mode(UC_LNX);
+        break;
     case EMOJI:
       switch(opt) {
       case SHRUG:
@@ -525,6 +525,34 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 	unicode_input_start(); register_hex(0x0029); unicode_input_finish();
 	unicode_input_start(); register_hex(0x1557); unicode_input_finish();
 	break;
+      case HAPPY3:
+    unicode_input_start(); register_hex(0x1566); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x141b); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+    unicode_input_start(); register_hex(0x1564); unicode_input_finish();
+    break;
+      case SING1:
+    unicode_input_start(); register_hex(0x266b); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x141b); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+    unicode_input_start(); register_hex(0x266b); unicode_input_finish();
+    break;
+      case SING2:
+    unicode_input_start(); register_hex(0x266b); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x1415); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+    unicode_input_start(); register_hex(0x266b); unicode_input_finish();
+    break;
+
       case TABLE1:
 	unicode_input_start(); register_hex(0x0028); unicode_input_finish();
 	unicode_input_start(); register_hex(0x256f); unicode_input_finish();
@@ -540,6 +568,51 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 	unicode_input_start(); register_hex(0x253b); unicode_input_finish();
 	break;
 
+    case TABLE2:
+    unicode_input_start(); register_hex(0x252c); unicode_input_finish();
+    unicode_input_start(); register_hex(0x2500); unicode_input_finish();
+    unicode_input_start(); register_hex(0x252c); unicode_input_finish();
+    unicode_input_start(); register_hex(0xfeff); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x30ce); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x309c); unicode_input_finish();
+    unicode_input_start(); register_hex(0x002d); unicode_input_finish();
+    unicode_input_start(); register_hex(0x309c); unicode_input_finish();
+    unicode_input_start(); register_hex(0x30ce); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+    break;
+
+    case TABLE3:
+    unicode_input_start(); register_hex(0x252c); unicode_input_finish();
+    unicode_input_start(); register_hex(0x2500); unicode_input_finish();
+    unicode_input_start(); register_hex(0x252c); unicode_input_finish();
+    unicode_input_start(); register_hex(0xfeff); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0xfe35); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x002f); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+    unicode_input_start(); register_hex(0x002e); unicode_input_finish();
+    unicode_input_start(); register_hex(0x25a1); unicode_input_finish();
+    unicode_input_start(); register_hex(0x002e); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x005c); unicode_input_finish();
+    unicode_input_start(); register_hex(0xff09); unicode_input_finish();
+    break;
+
+    case CONFUSED1:
+    unicode_input_start(); register_hex(0x0028); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x29c9); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x29a3); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x29c9); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0020); unicode_input_finish();
+    unicode_input_start(); register_hex(0x0029); unicode_input_finish();
+    break;
       }
       break;
     }
