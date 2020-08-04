@@ -100,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |   Tab  |   '  |   ,  |   .  |   P  |   Y  |  [   |           |   ]  |   F  |   G  |   C  |   R  |   L  |   /    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |Ctrl/Esc|   A  |   O  |   E  |   U  |   I  |------|           |------|   D  |   H  |   T  |   N  |   S  |   -    |
- * |--------+------+------+------+------+------|  `~  |           |   \  |------+------+------+------+------+--------|
+ * |--------+------+------+------+------+------|  ~   |           |   \  |------+------+------+------+------+--------|
  * | LShift |   :  |   Q  |   J  |   K  |   X  |      |           |      |   B  |   M  |   W  |   V  |   Z  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   | ~L1  | LAlt |  Left| Right| LCmd |                                       | LCmd | Up   | Down | RCtrl|  ~L2 |
@@ -108,9 +108,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        ,-------------.       ,-------------.
  *                                        | Del  | Esc  |       | App  | Esc  |
  *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      |  -_  |       | ~L1  |        |      |
+ *                                 |      |      |  _   |       | ~L1  |        |      |
  *                                 | Space|Backsp|------|       |------|  LAlt  |Enter |
- *                                 |      |ace   |  -_  |       | Ctrl |        |      |
+ *                                 |      |ace   |  _   |       | Ctrl |        |      |
  *                                 `--------------------'       `----------------------'
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
@@ -120,11 +120,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LT(UNI, KC_GRV),         KC_1,        KC_2,    KC_3,   KC_4,   KC_5,   KC_6,
         KC_TAB,         KC_QUOT,     KC_COMM, KC_DOT, KC_P,   KC_Y,   KC_LBRC,
         CTL_T(KC_ESC),       KC_A,        KC_O,    KC_E,   KC_U,   KC_I,
-        KC_LSPO,        KC_SCLN,     KC_Q,    KC_J,   KC_K,   KC_X,   KC_GRV,
+        KC_LSPO,        KC_SCLN,     KC_Q,    KC_J,   KC_K,   KC_X,   KC_TILD,
         MO(SYMB),       KC_LALT,   KC_LEFT,KC_RGHT,KC_LGUI,
                                                       KC_DELT,KC_ESC,
-                                                              KC_MINS,
-                                               KC_SPC,KC_BSPC,KC_MINS,
+                                                              KC_UNDS,
+                                               KC_SPC,KC_BSPC,KC_UNDS,
         // right hand
              KC_5,         KC_6,   KC_7,   KC_8,   KC_9,   KC_0,            LT(UNI2, KC_EQL),
              KC_RBRC,      KC_F,   KC_G,   KC_C,   KC_R,   KC_L,            KC_SLSH,
