@@ -108,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        ,-------------.       ,-------------.
  *                                        | Del  | Esc  |       | App  | Esc  |
  *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      |  _   |       | ~L1  |        |      |
+ *                                 |      |      | LAlt |       | ~L1  |        |      |
  *                                 | Space|Backsp|------|       |------|  LAlt  |Enter |
  *                                 |      |ace   |  _   |       | Ctrl |        |      |
  *                                 `--------------------'       `----------------------'
@@ -123,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSPO,        KC_SCLN,     KC_Q,    KC_J,   KC_K,   KC_X,   KC_TILD,
         MO(SYMB),       KC_LALT,   KC_LEFT,KC_RGHT,KC_LGUI,
                                                       KC_DELT,KC_ESC,
-                                                              KC_UNDS,
+                                                              KC_LALT,
                                                KC_SPC,KC_BSPC,KC_UNDS,
         // right hand
              KC_5,         KC_6,   KC_7,   KC_8,   KC_9,   KC_0,            LT(UNI2, KC_EQL),
@@ -223,9 +223,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  ┌   |  ┐   |  └   |  ┘   |  │   |  ─   |           |  ╔   |  ╗   |  ╚   |  ╝   |  ║   |  ═   |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        | shrug| yay  | hug  | smile|smile2| OSX  |           |  Λ   |  ℉   |  μ   |  ℃   |  ➙   |  ▻   |  ‽    |
+ * |        | shrug| yay  | hug  | smile|smile2| OSX  |           |  Λ   |  ℉  |  μ   |  ℃  |  ➙   |  ¿   |   ‽    |
  * |--------+------+------+------+------+------|Mode  |           |      |------+------+------+------+------+--------|
- * |        | hmm1 | hmm2 | gary1| gary2| gary3|------|           |------|  ☺   |  ☻   |  ☹   |  ♡   |  ♥   |  █    |
+ * |        | hmm1 | hmm2 | gary1| gary2| gary3|------|           |------|  ☺   |  ☻   |  ☹   |  ♡   |  ♥   |   ⸘    |
  * |--------+------+------+------+------+------|LINUX |           |  λ   |------+------+------+------+------+--------|
  * |        |table1|table2| sing1| sing2| cfzd1|Mode  |           |      |  ❤  |  ☐   |  ☑   |  ☒   |  ♫   |  ▄    |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -251,8 +251,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   KC_TRNS, KC_TRNS, KC_TRNS,
     // right hand
        UC(0x2554),  UC(0x2557), UC(0x255a), UC(0x255d), UC(0x2551), UC(0x2550), KC_TRNS,
-       UC(0x039b),  UC(0x2109), UC(0x03bc), UC(0x2103), UC(0x2799), UC(0x25bb), UC(0x203d),
-                 UC(0x263a), UC(0x263b), UC(0x2639), UC(0x2661), UC(0x2665), UC(0x2588),
+       UC(0x039b),  UC(0x2109), UC(0x03bc), UC(0x2103), UC(0x2799), UC(0x00bf), UC(0x203d),
+                 UC(0x263a), UC(0x263b), UC(0x2639), UC(0x2661), UC(0x2665), UC(0x2e18),
        UC(0x03bb),  UC(0x2764), UC(0x2610), UC(0x2611), UC(0x2612), UC(0x266b), UC(0x2584),
        UC(0x2318), UC(0x2714), UC(0x2718), UC(0x25cf), UC(0x2580),
         UC(0x2592), UC(0x2593),
